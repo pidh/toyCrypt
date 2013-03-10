@@ -21,8 +21,28 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGE.
 #
-TARGET=aes sha1 sha256
 
-all: $(TARGET)
+TARGETS=test_aes test_sha1 test_sha256
 
-#aes: aes.c
+all: $(TARGETS)
+
+test_aes: aes.o test_aes.o
+	$(CC) -o $@ $?
+
+test_sha1: sha1.o test_sha1.o
+	$(CC) -o $@ $?
+
+test_sha256: sha256.o test_sha256.o
+	$(CC) -o $@ $?
+
+aes.o: aes.c aes.h
+test_aes.o: test_aes.c aes.h
+
+sha1.o: sha1.c sha1.h
+test_sha1.o: test_sha1.c sha1.h
+
+sha256.o: sha256.c sha256.h
+test_sha256.o: test_sha256.c sha256.h
+
+clean:
+	-rm -f *.o $(TARGETS)
