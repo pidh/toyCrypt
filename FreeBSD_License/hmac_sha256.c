@@ -37,8 +37,8 @@
 #include "sha256.h"
 
 
-void
-HMAC_SHA256_Calc(u1 *text, int text_len, u1 *key, int key_len, u1 *digest)
+int
+HMAC_SHA256_Calc(const u1 *text, int text_len, const u1 *key, int key_len, u1 *digest)
 {
 	u1	tmp[32];	/* L=32 */
 	u1	pad[64];
@@ -47,6 +47,8 @@ HMAC_SHA256_Calc(u1 *text, int text_len, u1 *key, int key_len, u1 *digest)
 
 	if(key_len > 64) {
 		ctx = SHA256_Init();
+		if(ctx == NULL)
+			return(-1);
 		SHA256_Calc(ctx, key, key_len);
 		SHA256_Finish(ctx, tmp);
 		key = tmp;
@@ -58,6 +60,8 @@ HMAC_SHA256_Calc(u1 *text, int text_len, u1 *key, int key_len, u1 *digest)
 		pad[i] ^= key[i];
 
 	ctx = SHA256_Init();
+	if(ctx == NULL)
+		return(-1);
 	SHA256_Calc(ctx, pad, sizeof(pad));
 	SHA256_Calc(ctx, text, text_len);
 	SHA256_Finish(ctx, digest);
@@ -66,7 +70,11 @@ HMAC_SHA256_Calc(u1 *text, int text_len, u1 *key, int key_len, u1 *digest)
 		pad[i] ^= 0x5c ^ 0x36;
 
 	ctx = SHA256_Init();
+	if(ctx == NULL)
+		return(-1);
 	SHA256_Calc(ctx, pad, sizeof(pad));
 	SHA256_Calc(ctx, digest, 32);
 	SHA256_Finish(ctx, digest);
+
+	return(0);
 }

@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "comtypes.h"
-#include "sha256.h"
+#include "hmac_sha256.h"
 
 static void
 test(u1 *text, int text_len, u1 *key, int key_len, u1 *correct_digest)
@@ -34,7 +34,10 @@ test(u1 *text, int text_len, u1 *key, int key_len, u1 *correct_digest)
 	u1 digest[32];
 	int i;
 
-	HMAC_SHA256_Calc(text, text_len, key, key_len, digest);
+	if(HMAC_SHA256_Calc(text, text_len, key, key_len, digest)) {
+		printf("some error\n");
+		return;
+	}
 
 	if(memcmp(correct_digest, digest, 32)) {
 		printf("correct is :");

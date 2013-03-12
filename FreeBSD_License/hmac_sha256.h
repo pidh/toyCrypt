@@ -1,5 +1,5 @@
 /*
-** Copyright 2011-2013 pidh <github360@yahoo.co.jp>. All rights reserved.
+** Copyright 2013 pidh <github360@yahoo.co.jp>. All rights reserved.
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are met:
@@ -22,12 +22,4 @@
 ** OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ** ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef	__SHA256_H__
-#define	__SHA256_H__
-
-void SHA256_Calc(void *_ctx, const u1 *b, u4 len);
-void *SHA256_Init(void);
-void SHA256_Finish(void *_ctx, u1 *digest);
-
-#endif
-
+int HMAC_SHA256_Calc(const u1 *text, int text_len, const u1 *key, int key_len, u1 *digest);

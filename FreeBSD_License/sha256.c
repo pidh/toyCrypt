@@ -79,7 +79,7 @@ static u4 K[] = {
 };
 
 static void
-SHA256(void *_ctx, u1 *M)
+SHA256(void *_ctx, const u1 *M)
 {
 	SHA256_CTX *ctx = (SHA256_CTX *)_ctx;
 	int	t;
@@ -155,7 +155,7 @@ SHA256_Init(void)
 }
 
 void
-SHA256_Calc(void *_ctx, u1 *b, u4 len)
+SHA256_Calc(void *_ctx, const u1 *b, u4 len)
 {
 	SHA256_CTX *ctx = (SHA256_CTX *)_ctx;
 	u4	lenM = ctx->lenM;
